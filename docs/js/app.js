@@ -174,15 +174,13 @@ class DragHandler {
     }
     const ddx = Math.round(this.ddx)
     const ddy = Math.round(this.ddy)
-    if (ddx || ddy) {
-      this.onmomentum(ddx, ddy)
-    }
     if (!ddx && !ddy) {
       this.ddx = 0
       this.ddy = 0
       this.requestID = 0
       return
     }
+    this.onmomentum(ddx, ddy)
     this.requestID = window.requestAnimationFrame(this.dragend)
   }
 
