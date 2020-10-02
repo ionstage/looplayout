@@ -198,12 +198,14 @@ class DragHandler {
 
   _calcddd (dd) {
     const ddd = (dd > 0 ? -1 : 1)
-    if (Math.abs(dd) > 48) {
-      return ddd * 4
-    } else if (Math.abs(dd) < 24) {
+    const add = Math.abs(dd)
+    if (add < 24) {
       return ddd / 4
     }
-    return ddd
+    if (add < 48) {
+      return ddd
+    }
+    return ddd * 4
   }
 }
 
