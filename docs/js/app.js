@@ -120,7 +120,6 @@ class DragHandler {
     this.ddx = 0
     this.ddy = 0
     this.requestID = 0
-    this.isDiagonal = false
     this.dragend = this.dragend.bind(this)
   }
 
@@ -151,33 +150,23 @@ class DragHandler {
   end () {
     this.onend()
     if (Math.abs(this.ddx) > 1 || Math.abs(this.ddy) > 1) {
-      this.isDiagonal = (Math.abs(this.ddx) > 1 && Math.abs(this.ddy) > 1)
       this.requestID = window.requestAnimationFrame(this.dragend)
     }
   }
 
   dragend () {
-    if (this.isDiagonal) {
-      if (Math.abs(this.ddx) > Math.abs(this.ddy)) {
-        const pddx = this.ddx
-        this.ddx += this._calcddd(this.ddx)
-        this.ddy *= this.ddx / pddx
-      } else {
-        const pddy = this.ddy
-        this.ddy += this._calcddd(this.ddy)
-        this.ddx *= this.ddy / pddy
-      }
+    if (Math.abs(this.ddy) > Math.abs(this.ddx)) {
+      const pddy = this.ddy
+      this.ddy += this._calcddd(this.ddy)
+      this.ddx *= this.ddy / pddy
     } else {
-      if (this.ddx) {
-        this.ddx += this._calcddd(this.ddx)
-      }
-      if (this.ddy) {
-        this.ddy += this._calcddd(this.ddy)
-      }
+      const pddx = this.ddx
+      this.ddx += this._calcddd(this.ddx)
+      this.ddy *= this.ddx / pddx
     }
     const ddx = Math.round(this.ddx)
     const ddy = Math.round(this.ddy)
-    if (!ddx && !ddy) {
+    if (!ddy && !ddx) {
       this.ddx = 0
       this.ddy = 0
       this.requestID = 0
