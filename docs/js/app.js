@@ -236,6 +236,7 @@ class WheelHandler {
   }
 
   handle (event) {
+    event.preventDefault()
     if (!this.isStarted) {
       this.isStarted = true
       this.wheelstart()
