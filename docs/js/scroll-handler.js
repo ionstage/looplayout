@@ -232,7 +232,7 @@ class WheelHandler {
   }
 
   enable () {
-    document.addEventListener('wheel', this.handle.bind(this))
+    document.addEventListener('wheel', this.handle.bind(this), { passive: false })
   }
 
   handle (event) {
