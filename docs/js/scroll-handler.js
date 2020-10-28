@@ -113,7 +113,7 @@ class DragHandler {
       element: document,
       onstart: this.start.bind(this),
       onmove: this.move.bind(this),
-      onend: this.end.bind(this)
+      onend: this.end.bind(this),
     });
     this.dx = 0;
     this.dy = 0;
@@ -204,7 +204,7 @@ class KeyHandler {
       37: props.onleft,
       38: props.onup,
       39: props.onright,
-      40: props.ondown
+      40: props.ondown,
     };
   }
 
@@ -270,18 +270,18 @@ export class ScrollHandler {
       onstart: () => { /* do nothing */ },
       onmove: (dx, dy) => { this.scroll(-dx, -dy); },
       onend: () => { /* do nothing */ },
-      onmomentum: (dx, dy) => { this.scroll(-dx, -dy); }
+      onmomentum: (dx, dy) => { this.scroll(-dx, -dy); },
     });
     this.keyHandler = new KeyHandler({
       onleft: () => { this.scroll(-40, 0); },
       onup: () => { this.scroll(0, -40); },
       onright: () => { this.scroll(40, 0); },
-      ondown: () => { this.scroll(0, 40); }
+      ondown: () => { this.scroll(0, 40); },
     });
     this.wheelHandler = new WheelHandler({
       onstart: () => { this.dragHandler.cancel(); },
       onmove: (dx, dy) => { this.scroll(dx, dy); },
-      onend: () => { /* do nothing */ }
+      onend: () => { /* do nothing */ },
     });
   }
 
