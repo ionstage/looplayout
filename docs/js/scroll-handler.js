@@ -1,5 +1,5 @@
 class Draggable {
-  constructor (props) {
+  constructor(props) {
     this.element = props.element;
     this.onstart = props.onstart;
     this.onmove = props.onmove;
@@ -15,11 +15,11 @@ class Draggable {
     this.startPageY = 0;
   }
 
-  static supportsTouch () {
+  static supportsTouch() {
     return 'ontouchstart' in window || (typeof DocumentTouch !== 'undefined' && document instanceof DocumentTouch);
   }
 
-  static getOffset (element) {
+  static getOffset(element) {
     const rect = element.getBoundingClientRect();
     const bodyRect = document.body.getBoundingClientRect();
     const bodyStyle = window.getComputedStyle(document.body);
@@ -28,12 +28,12 @@ class Draggable {
     return { x, y };
   }
 
-  enable () {
+  enable() {
     const type = (Draggable.supportsTouch() ? 'touchstart' : 'mousedown');
     this.element.addEventListener(type, this['on' + type], { passive: false });
   }
 
-  disable () {
+  disable() {
     const supportsTouch = Draggable.supportsTouch();
     const startType = (supportsTouch ? 'touchstart' : 'mousedown');
     const moveType = (supportsTouch ? 'touchmove' : 'mousemove');
@@ -43,7 +43,7 @@ class Draggable {
     document.removeEventListener(endType, this['on' + endType]);
   }
 
-  onmousedown (event) {
+  onmousedown(event) {
     const offset = Draggable.getOffset(event.target);
     const x = event.pageX - offset.x;
     const y = event.pageY - offset.y;
@@ -54,19 +54,19 @@ class Draggable {
     document.addEventListener('mouseup', this.onmouseup);
   }
 
-  onmousemove (event) {
+  onmousemove(event) {
     const dx = event.pageX - this.startPageX;
     const dy = event.pageY - this.startPageY;
     this.onmove.call(null, { dx, dy, event });
   }
 
-  onmouseup (event) {
+  onmouseup(event) {
     document.removeEventListener('mousemove', this.onmousemove);
     document.removeEventListener('mouseup', this.onmouseup);
     this.onend.call(null, { event });
   }
 
-  ontouchstart (event) {
+  ontouchstart(event) {
     if (event.touches.length > 1) {
       return;
     }
@@ -82,7 +82,7 @@ class Draggable {
     document.addEventListener('touchend', this.ontouchend);
   }
 
-  ontouchmove (event) {
+  ontouchmove(event) {
     const touch = event.changedTouches[0];
     if (touch.identifier !== this.identifier) {
       return;
@@ -92,7 +92,7 @@ class Draggable {
     this.onmove.call(null, { dx, dy, event });
   }
 
-  ontouchend (event) {
+  ontouchend(event) {
     const touch = event.changedTouches[0];
     if (touch.identifier !== this.identifier) {
       return;
@@ -104,7 +104,7 @@ class Draggable {
 }
 
 class DragHandler {
-  constructor (props) {
+  constructor(props) {
     this.onstart = props.onstart;
     this.onmove = props.onmove;
     this.onend = props.onend;
@@ -123,11 +123,11 @@ class DragHandler {
     this.dragend = this.dragend.bind(this);
   }
 
-  enable () {
+  enable() {
     this.draggable.enable();
   }
 
-  start (context) {
+  start(context) {
     context.event.preventDefault();
     this.dx = 0;
     this.dy = 0;
@@ -139,7 +139,7 @@ class DragHandler {
     this.onstart();
   }
 
-  move (context) {
+  move(context) {
     this.ddx = context.dx - this.dx;
     this.ddy = context.dy - this.dy;
     this.dx = context.dx;
@@ -147,14 +147,14 @@ class DragHandler {
     this.onmove(this.ddx, this.ddy);
   }
 
-  end () {
+  end() {
     this.onend();
     if (Math.abs(this.ddx) > 1 || Math.abs(this.ddy) > 1) {
       this.requestID = window.requestAnimationFrame(this.dragend);
     }
   }
 
-  dragend () {
+  dragend() {
     if (Math.abs(this.ddy) > Math.abs(this.ddx)) {
       const pddy = this.ddy;
       this.ddy += this._calcddd(this.ddy);
@@ -176,7 +176,7 @@ class DragHandler {
     this.requestID = window.requestAnimationFrame(this.dragend);
   }
 
-  cancel () {
+  cancel() {
     if (this.requestID) {
       window.cancelAnimationFrame(this.requestID);
       this.ddx = 0;
@@ -185,7 +185,7 @@ class DragHandler {
     }
   }
 
-  _calcddd (dd) {
+  _calcddd(dd) {
     const ddd = (dd > 0 ? -1 : 1);
     const add = Math.abs(dd);
     if (add < 24) {
@@ -199,7 +199,7 @@ class DragHandler {
 }
 
 class KeyHandler {
-  constructor (props) {
+  constructor(props) {
     this.handlers = {
       37: props.onleft,
       38: props.onup,
@@ -208,11 +208,11 @@ class KeyHandler {
     };
   }
 
-  enable () {
+  enable() {
     document.addEventListener('keydown', this.handle.bind(this));
   }
 
-  handle (event) {
+  handle(event) {
     const handler = this.handlers[event.which];
     if (handler) {
       event.preventDefault();
@@ -222,7 +222,7 @@ class KeyHandler {
 }
 
 class WheelHandler {
-  constructor (props) {
+  constructor(props) {
     this.onstart = props.onstart;
     this.onmove = props.onmove;
     this.onend = props.onend;
@@ -231,11 +231,11 @@ class WheelHandler {
     this.wheelend = this.wheelend.bind(this);
   }
 
-  enable () {
+  enable() {
     document.addEventListener('wheel', this.handle.bind(this), { passive: false });
   }
 
-  handle (event) {
+  handle(event) {
     event.preventDefault();
     if (!this.isStarted) {
       this.isStarted = true;
@@ -248,15 +248,15 @@ class WheelHandler {
     this.timeoutID = setTimeout(this.wheelend, 100);
   }
 
-  wheelstart () {
+  wheelstart() {
     this.onstart();
   }
 
-  wheelmove (dx, dy) {
+  wheelmove(dx, dy) {
     this.onmove(dx, dy);
   }
 
-  wheelend () {
+  wheelend() {
     this.onend();
     this.isStarted = false;
     this.timeoutID = 0;
@@ -264,7 +264,7 @@ class WheelHandler {
 }
 
 export class ScrollHandler {
-  constructor (props) {
+  constructor(props) {
     this.onscroll = props.onscroll;
     this.dragHandler = new DragHandler({
       onstart: () => { /* do nothing */ },
@@ -285,13 +285,13 @@ export class ScrollHandler {
     });
   }
 
-  enable () {
+  enable() {
     this.dragHandler.enable();
     this.keyHandler.enable();
     this.wheelHandler.enable();
   }
 
-  scroll (dx, dy) {
+  scroll(dx, dy) {
     this.onscroll(dx, dy);
   }
 }
