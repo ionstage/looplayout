@@ -1,6 +1,6 @@
 import { ScrollHandler } from './scroll-handler.js';
 
-export class App {
+class App {
   constructor() {
     this.scrollHandler = new ScrollHandler({ onscroll: this.scroll.bind(this) });
     this.x = 0;
@@ -21,3 +21,10 @@ export class App {
     document.body.style.backgroundPosition = -this.x + 'px ' + -this.y + 'px';
   }
 }
+
+const main = () => {
+  const app = new App();
+  app.init();
+};
+
+main();
