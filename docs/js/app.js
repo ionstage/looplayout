@@ -11,11 +11,17 @@ class App {
     this.content.init();
     this.scrollHandler.enable();
   }
+
+  editable() { /* TODO */ }
 }
 
 const main = () => {
   const app = new App();
   app.init();
+
+  if (location.hostname === 'localhost') {
+    app.editable();
+  }
 };
 
 main();
