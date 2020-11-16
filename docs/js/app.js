@@ -12,7 +12,10 @@ class App {
     this.scrollHandler.enable();
   }
 
-  editable() { /* TODO */ }
+  editable() {
+    const f = new Function("return import('./editable/editable.js')");
+    return f().then(m => new m.Editable({ app: this }).enable());
+  }
 }
 
 const main = () => {
