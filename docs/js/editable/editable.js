@@ -1,7 +1,11 @@
-export class Editable {
-  constructor(props) {
-    this.app = props.app;
-  }
+const template = document.createElement('template');
 
-  enable() { /* TODO */ }
+class Editable extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+  }
 }
+
+window.customElements.define('looplayout-editable', Editable);

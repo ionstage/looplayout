@@ -14,7 +14,7 @@ class App {
 
   editable() {
     const f = new Function("return import('./editable/editable.js')");
-    return f().then(m => new m.Editable({ app: this }).enable());
+    return f().then(() => document.body.appendChild(document.createElement('looplayout-editable')));
   }
 }
 
