@@ -13,7 +13,7 @@ class App {
   }
 
   editable() {
-    const f = new Function("return import('./editable/editable.js')");
+    const f = new Function("return import('./editable.js')");
     return f().then(() => document.body.appendChild(document.createElement('looplayout-editable')));
   }
 }
