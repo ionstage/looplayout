@@ -3,8 +3,7 @@ const template = document.createElement('template');
 template.innerHTML = `
   <style>
     :host {
-      bottom: 0;
-      height: 48px;
+      height: 100%;
       position: fixed;
       width: 100%;
     }
