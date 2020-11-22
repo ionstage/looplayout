@@ -1,5 +1,6 @@
 export class Content {
   constructor() {
+    this.element = document.querySelector('.content');
     this.x = 0;
     this.y = 0;
   }
