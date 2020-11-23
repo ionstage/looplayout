@@ -3,13 +3,9 @@ html {
 }
 
 body {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  height: 100%;
   margin: 0;
   overflow: hidden;
-  position: absolute;
+  pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
-  width: 100%;
 }
