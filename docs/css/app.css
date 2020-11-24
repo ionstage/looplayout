@@ -9,3 +9,12 @@ body {
   -webkit-user-select: none;
   user-select: none;
 }
+
+.content {
+  font-size: 0;
+  height: 0;
+  padding: 50vh 50vw;
+  position: fixed;
+  transform: translateZ(0);
+  width: 0;
+}
