@@ -7,7 +7,7 @@ class App {
     this.scrollHandler = new ScrollHandler({ onscroll: this.content.scroll.bind(this.content) });
   }
 
-  init() {
+  load() {
     this.content.init();
     this.scrollHandler.enable();
   }
@@ -20,7 +20,7 @@ class App {
 
 const main = () => {
   const app = new App();
-  app.init();
+  app.load();
 
   if (location.hostname === 'localhost') {
     app.editable();
