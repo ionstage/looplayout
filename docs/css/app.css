@@ -21,4 +21,9 @@ body {
 
 .scene {
   position: absolute;
+  transition: opacity .3s ease-in-out;
+}
+
+.scene.hide {
+  opacity: 0;
 }
