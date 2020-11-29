@@ -1,4 +1,5 @@
 import { Content } from './content.js';
+import { ContentData } from './content-data.js';
 import { ScrollHandler } from './scroll-handler.js';
 
 class App {
@@ -8,8 +9,9 @@ class App {
   }
 
   load() {
-    this.content.init();
-    this.scrollHandler.enable();
+    return this.content.load(ContentData).then(() => {
+      this.scrollHandler.enable();
+    });
   }
 
   editable() {
