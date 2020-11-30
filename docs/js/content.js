@@ -61,6 +61,8 @@ export class Content {
     this.element = document.querySelector('.content');
     this.fontSize = 1;
     this.scene = new SceneProxy({ parentElement: this.element });
+    this.dtop = 0;
+    this._onanimate = this._onanimate.bind(this);
   }
 
   load(data) {
@@ -73,9 +75,11 @@ export class Content {
     if (!dy) {
       return;
     }
-    const dtop = dy / this.fontSize;
-    this.scene.scrollBy(dtop);
-    this._moveByScene();
+    const needsRequest = !this.dtop;
+    this.dtop = dy / this.fontSize;
+    if (needsRequest) {
+      requestAnimationFrame(this._onanimate);
+    }
   }
 
   _calcCenter() {
@@ -111,6 +115,12 @@ export class Content {
   _moveByScene() {
     const p = this.scene.scrollPosition();
     this._move(p.left, p.top);
+  }
+
+  _onanimate() {
+    this.scene.scrollBy(this.dtop);
+    this._moveByScene();
+    this.dtop = 0;
   }
 
   _resize() {
