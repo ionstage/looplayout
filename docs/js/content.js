@@ -9,6 +9,7 @@ class SceneProxy {
 
   load(data) {
     this.scenes = data.scenes.map(scene => (this.sceneMap[scene.name] = scene));
+    this._setScenesPosition();
     this._loadScenes();
     this.current = this.scenes[0];
     return this.current.load();
@@ -23,17 +24,11 @@ class SceneProxy {
   }
 
   _loadScenes() {
-    return Promise.all(this.scenes.map(scene => this._loadScene(scene)));
-  }
-
-  _loadScene(scene) {
-    const prev = this.sceneMap[scene.prev];
-    if (prev) {
-      scene.setPosition(prev.globalScrollPosition(prev.scrollHeight));
-    }
-    scene.parentElement = this.parentElement;
-    scene.onchange = this._onchange;
-    return scene.load();
+    return Promise.all(this.scenes.map(scene => {
+      scene.parentElement = this.parentElement;
+      scene.onchange = this._onchange;
+      return scene.load();
+    }));
   }
 
   _onchange(name, dtop) {
@@ -47,6 +42,17 @@ class SceneProxy {
     }
     s.scrollTop = (dtop >= 0 ? dtop : s.scrollHeight + dtop);
     this.current = s;
+  }
+
+  _setScenesPosition() {
+    const map = { [this.scenes[0].name]: true };
+    for (const scene of this.scenes) {
+      const next = (scene.next ? this.sceneMap[scene.next] : null);
+      if (next && !map[next.name]) {
+        next.setPosition(scene.globalScrollPosition(scene.scrollHeight));
+        map[next.name] = true;
+      }
+    }
   }
 }
 
