@@ -36,12 +36,15 @@ export class Scene {
     const scrollTop = this.scrollTop + dtop;
     if (scrollTop >= this.scrollHeight) {
       this.scrollTop = this.scrollHeight;
+      this.onscroll();
       this.onchange(this.next, scrollTop - this.scrollHeight);
     } else if (scrollTop < 0) {
       this.scrollTop = 0;
+      this.onscroll();
       this.onchange(this.prev, scrollTop);
     } else {
       this.scrollTop = scrollTop;
+      this.onscroll();
     }
   }
 
@@ -59,6 +62,10 @@ export class Scene {
       left: this.left + p.left,
       top: this.top + p.top,
     };
+  }
+
+  onscroll() {
+    /* template */
   }
 
   _clamp(v, lo, hi) {
