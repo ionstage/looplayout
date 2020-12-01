@@ -13,20 +13,11 @@ class App {
       this.scrollHandler.enable();
     });
   }
-
-  editable() {
-    const f = new Function("return import('./editable.js')");
-    return f().then(() => document.body.appendChild(document.createElement('looplayout-editable')));
-  }
 }
 
 const main = () => {
   const app = new App();
   app.load();
-
-  if (location.hostname === 'localhost') {
-    app.editable();
-  }
 };
 
 main();
