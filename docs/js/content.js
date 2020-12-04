@@ -60,6 +60,7 @@ export class Content {
   constructor() {
     this.element = document.querySelector('.content');
     this.fontSize = 1;
+    this.viewRadius = 300;
     this.scene = new SceneProxy({ parentElement: this.element });
     this.dtop = 0;
     this._onanimate = this._onanimate.bind(this);
@@ -91,7 +92,7 @@ export class Content {
 
   _calcFontSize() {
     const c = this._calcCenter();
-    return Math.sqrt(c.x * c.x + c.y * c.y) / 300;
+    return Math.sqrt(c.x * c.x + c.y * c.y) / this.viewRadius;
   }
 
   _debounce(func, delay) {
