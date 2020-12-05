@@ -18,6 +18,10 @@ class App {
 const main = () => {
   const app = new App();
   app.load();
+
+  if (location.hostname === 'localhost') {
+    window.app = app;
+  }
 };
 
 main();
