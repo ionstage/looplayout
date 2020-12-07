@@ -265,6 +265,7 @@ class WheelHandler {
 
 export class ScrollHandler {
   constructor(props) {
+    this.keyScrollAmount = 40;
     this.onscroll = props.onscroll;
     this.dragHandler = new DragHandler({
       onstart: () => { /* do nothing */ },
@@ -273,10 +274,10 @@ export class ScrollHandler {
       onmomentum: (dx, dy) => { this.scroll(-dx, -dy); },
     });
     this.keyHandler = new KeyHandler({
-      onleft: () => { this.scroll(-40, 0); },
-      onup: () => { this.scroll(0, -40); },
-      onright: () => { this.scroll(40, 0); },
-      ondown: () => { this.scroll(0, 40); },
+      onleft: () => { this.scroll(-this.keyScrollAmount, 0); },
+      onup: () => { this.scroll(0, -this.keyScrollAmount); },
+      onright: () => { this.scroll(this.keyScrollAmount, 0); },
+      ondown: () => { this.scroll(0, this.keyScrollAmount); },
     });
     this.wheelHandler = new WheelHandler({
       onstart: () => { this.dragHandler.cancel(); },
