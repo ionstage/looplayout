@@ -67,9 +67,14 @@ export class Content {
   }
 
   load(data) {
-    window.addEventListener('resize', this._debounce(this._resize.bind(this), 100));
-    this._resize();
     return this.scene.load(data).then(() => this._moveByScene());
+  }
+
+  resize() {
+    const c = this._calcCenter();
+    this.element.style.padding = c.y + 'px ' + c.x + 'px';
+    this.fontSize = this._calcFontSize();
+    this.element.style.fontSize = this._round(this.fontSize) + 'px';
   }
 
   scroll(_, dy) {
@@ -95,19 +100,6 @@ export class Content {
     return Math.sqrt(c.x * c.x + c.y * c.y) / this.viewRadius;
   }
 
-  _debounce(func, delay) {
-    let t = 0;
-    return () => {
-      if (t) {
-        clearTimeout(t);
-      }
-      t = setTimeout(() => {
-        func();
-        t = 0;
-      }, delay);
-    };
-  }
-
   _move(left, top) {
     const t = 'translate3d(' + -this._round(left) + 'em, ' + -this._round(top) + 'em, 0)';
     this.element.style.transform = t;
@@ -122,13 +114,6 @@ export class Content {
     this.scene.scrollBy(this.dtop);
     this._moveByScene();
     this.dtop = 0;
-  }
-
-  _resize() {
-    const c = this._calcCenter();
-    this.element.style.padding = c.y + 'px ' + c.x + 'px';
-    this.fontSize = this._calcFontSize();
-    this.element.style.fontSize = this._round(this.fontSize) + 'px';
   }
 
   _round(n) {
