@@ -8,6 +8,10 @@ class App {
     this.scrollHandler = new ScrollHandler({ onscroll: this.content.scroll.bind(this.content) });
   }
 
+  get keyScrollAmount() {
+    return 40 * this.content.fontSize;
+  }
+
   load() {
     window.addEventListener('resize', this._debounce(this._resize.bind(this), 100));
     this._resize();
@@ -31,7 +35,7 @@ class App {
 
   _resize() {
     this.content.resize();
-    this.scrollHandler.keyScrollAmount = 40 * this.content.fontSize;
+    this.scrollHandler.keyScrollAmount = this.keyScrollAmount;
   }
 }
 
