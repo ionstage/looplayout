@@ -68,10 +68,6 @@ export class Scene {
     /* template */
   }
 
-  _clamp(v, lo, hi) {
-    return hi < v ? hi : (v < lo ? lo : v);
-  }
-
   _load() {
     this.element.className = 'scene hide';
     this.parentElement.appendChild(this.element);
