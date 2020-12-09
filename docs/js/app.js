@@ -4,7 +4,7 @@ import { ScrollHandler } from './scroll-handler.js';
 
 class App {
   constructor() {
-    this.content = new Content();
+    this.content = new Content({ element: document.querySelector('.content') });
     this.scrollHandler = new ScrollHandler({ onscroll: this.content.scroll.bind(this.content) });
   }
 

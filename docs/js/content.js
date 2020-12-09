@@ -57,8 +57,8 @@ class SceneProxy {
 }
 
 export class Content {
-  constructor() {
-    this.element = document.querySelector('.content');
+  constructor(props) {
+    this.element = props.element;
     this.fontSize = 1;
     this.viewRadius = 300;
     this.scene = new SceneProxy({ parentElement: this.element });
