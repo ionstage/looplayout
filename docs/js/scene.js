@@ -20,8 +20,10 @@ export class Scene {
     this.element.style.transform = 'translate3d(' + this.left + 'em, ' + this.top + 'em, 0)';
   }
 
-  load() {
+  load(parentElement, onchange) {
     if (!this.loadPromise) {
+      this.parentElement = parentElement;
+      this.onchange = onchange;
       this.loadPromise = this._load();
     }
     return this.loadPromise;

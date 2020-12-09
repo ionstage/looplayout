@@ -9,10 +9,9 @@ class SceneProxy {
 
   load(data) {
     this.scenes = data.scenes.map(scene => (this.sceneMap[scene.name] = scene));
-    this._setScenesPosition();
-    this._loadScenes();
     this.current = this.scenes[0];
-    return this.current.load();
+    this._setScenesPosition();
+    return this._loadScenes();
   }
 
   scrollBy(dtop) {
@@ -24,11 +23,8 @@ class SceneProxy {
   }
 
   _loadScenes() {
-    return Promise.all(this.scenes.map(scene => {
-      scene.parentElement = this.parentElement;
-      scene.onchange = this._onchange;
-      return scene.load();
-    }));
+    // load all scenes and wait for only first one
+    return this.scenes.map(scene => scene.load(this.parentElement, this._onchange))[0];
   }
 
   _onchange(name, dtop) {
