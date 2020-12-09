@@ -59,9 +59,9 @@ class SceneProxy {
 export class Content {
   constructor(props) {
     this.element = props.element;
-    this.fontSize = 1;
-    this.viewRadius = 300;
     this.scene = new SceneProxy({ parentElement: this.element });
+    this.viewRadius = 300;
+    this.fontSize = 1;
     this.dtop = 0;
     this._onanimate = this._onanimate.bind(this);
   }
