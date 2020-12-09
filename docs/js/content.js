@@ -71,9 +71,10 @@ export class Content {
   }
 
   resize() {
-    const c = this._calcCenter();
-    this.element.style.padding = c.y + 'px ' + c.x + 'px';
-    this.fontSize = this._calcFontSize();
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    this.fontSize = this._calcFontSize(cx, cy, this.viewRadius);
+    this.element.style.padding = cy + 'px ' + cx + 'px';
     this.element.style.fontSize = this._round(this.fontSize) + 'px';
   }
 
@@ -88,16 +89,8 @@ export class Content {
     }
   }
 
-  _calcCenter() {
-    return {
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-    };
-  }
-
-  _calcFontSize() {
-    const c = this._calcCenter();
-    return Math.sqrt(c.x * c.x + c.y * c.y) / this.viewRadius;
+  _calcFontSize(cx, cy, viewRadius) {
+    return Math.sqrt(cx * cx + cy * cy) / viewRadius;
   }
 
   _move(left, top) {
