@@ -1,21 +1,21 @@
-import { Content } from './content.js';
 import { ContentData } from './content-data.js';
+import { Main } from './main.js';
 import { ScrollHandler } from './scroll-handler.js';
 
 class App {
   constructor() {
-    this.content = new Content({ element: document.querySelector('.content') });
-    this.scrollHandler = new ScrollHandler({ onscroll: this.content.scroll.bind(this.content) });
+    this.main = new Main({ element: document.querySelector('.main') });
+    this.scrollHandler = new ScrollHandler({ onscroll: this.main.scroll.bind(this.main) });
   }
 
   get keyScrollAmount() {
-    return 40 * this.content.fontSize;
+    return 40 * this.main.fontSize;
   }
 
   load() {
     window.addEventListener('resize', this._debounce(this._resize.bind(this), 100));
     this._resize();
-    return this.content.load(ContentData).then(() => {
+    return this.main.load(ContentData).then(() => {
       this.scrollHandler.enable();
     });
   }
@@ -34,7 +34,7 @@ class App {
   }
 
   _resize() {
-    this.content.resize();
+    this.main.resize();
     this.scrollHandler.keyScrollAmount = this.keyScrollAmount;
   }
 }

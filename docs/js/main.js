@@ -52,7 +52,7 @@ class SceneProxy {
   }
 }
 
-export class Content {
+export class Main {
   constructor(props) {
     this.element = props.element;
     this.scene = new SceneProxy({ parentElement: this.element });

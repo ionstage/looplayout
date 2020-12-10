@@ -10,7 +10,7 @@ body {
   user-select: none;
 }
 
-.content {
+.main {
   position: fixed;
   transform: translateZ(0);
 }
