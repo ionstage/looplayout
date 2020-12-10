@@ -1,4 +1,4 @@
-import { ContentData } from './content-data.js';
+import { content } from './content.js';
 import { Main } from './main.js';
 import { ScrollHandler } from './scroll-handler.js';
 
@@ -15,7 +15,7 @@ class App {
   load() {
     window.addEventListener('resize', this._debounce(this._resize.bind(this), 100));
     this._resize();
-    return this.main.load(ContentData).then(() => {
+    return this.main.load(content).then(() => {
       this.scrollHandler.enable();
     });
   }

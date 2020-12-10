@@ -49,7 +49,7 @@ class TestScene3 extends TestScene {
   }
 }
 
-export const ContentData = {
+export const content = {
   scenes: [
     new TestScene1({ name: '1', scrollHeight: 480, next: '2', prev: '3' }),
     new TestScene2({ name: '2', scrollHeight: 480, next: '3', prev: '1' }),

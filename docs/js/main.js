@@ -7,8 +7,8 @@ class SceneProxy {
     this._onchange = this._onchange.bind(this);
   }
 
-  load(data) {
-    this.scenes = data.scenes.map(scene => (this.sceneMap[scene.name] = scene));
+  load(content) {
+    this.scenes = content.scenes.map(scene => (this.sceneMap[scene.name] = scene));
     this.current = this.scenes[0];
     this._setScenesPosition();
     return this._loadScenes();
@@ -62,8 +62,8 @@ export class Main {
     this._onanimate = this._onanimate.bind(this);
   }
 
-  load(data) {
-    return this.scene.load(data).then(() => this._moveByScene());
+  load(content) {
+    return this.scene.load(content).then(() => this._moveByScene());
   }
 
   resize() {
