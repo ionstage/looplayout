@@ -269,19 +269,19 @@ export class ScrollHandler {
     this.onscroll = props.onscroll;
     this.dragHandler = new DragHandler({
       onstart: () => { /* do nothing */ },
-      onmove: (dx, dy) => { this.scroll(-dx, -dy); },
+      onmove: (dx, dy) => { this.scrollBy(-dx, -dy); },
       onend: () => { /* do nothing */ },
-      onmomentum: (dx, dy) => { this.scroll(-dx, -dy); },
+      onmomentum: (dx, dy) => { this.scrollBy(-dx, -dy); },
     });
     this.keyHandler = new KeyHandler({
-      onleft: () => { this.scroll(-this.keyScrollAmount, 0); },
-      onup: () => { this.scroll(0, -this.keyScrollAmount); },
-      onright: () => { this.scroll(this.keyScrollAmount, 0); },
-      ondown: () => { this.scroll(0, this.keyScrollAmount); },
+      onleft: () => { this.scrollBy(-this.keyScrollAmount, 0); },
+      onup: () => { this.scrollBy(0, -this.keyScrollAmount); },
+      onright: () => { this.scrollBy(this.keyScrollAmount, 0); },
+      ondown: () => { this.scrollBy(0, this.keyScrollAmount); },
     });
     this.wheelHandler = new WheelHandler({
       onstart: () => { this.dragHandler.cancel(); },
-      onmove: (dx, dy) => { this.scroll(dx, dy); },
+      onmove: (dx, dy) => { this.scrollBy(dx, dy); },
       onend: () => { /* do nothing */ },
     });
   }
@@ -292,7 +292,7 @@ export class ScrollHandler {
     this.wheelHandler.enable();
   }
 
-  scroll(dx, dy) {
+  scrollBy(dx, dy) {
     this.onscroll(dx, dy);
   }
 }
