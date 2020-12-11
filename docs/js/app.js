@@ -15,9 +15,7 @@ class App {
   load() {
     window.addEventListener('resize', this._debounce(this._resize.bind(this), 100));
     this._resize();
-    return this.main.load(content).then(() => {
-      this.scrollHandler.enable();
-    });
+    return this.main.load(content).then(() => this.scrollHandler.enable());
   }
 
   _debounce(func, delay) {
