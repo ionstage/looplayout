@@ -3,11 +3,13 @@ html {
 }
 
 body {
+  height: 100vh;
   margin: 0;
   overflow: hidden;
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
+  width: 100vw;
 }
 
 .main {
