@@ -79,7 +79,7 @@ export class Main {
       return;
     }
     const needsRequest = !this.dtop;
-    this.dtop = dy / this.fontSize;
+    this.dtop += dy / this.fontSize;
     if (needsRequest) {
       requestAnimationFrame(this._onanimate);
     }
