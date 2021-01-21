@@ -20,12 +20,12 @@ class App {
 
   _debounce(func, delay) {
     let t = 0;
-    return () => {
+    return (...args) => {
       if (t) {
         clearTimeout(t);
       }
       t = setTimeout(() => {
-        func();
+        func(...args);
         t = 0;
       }, delay);
     };
