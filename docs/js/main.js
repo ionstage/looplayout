@@ -1,17 +1,16 @@
 class SceneProxy {
-  constructor(props) {
-    this.parentElement = props.parentElement;
+  constructor() {
     this.scenes = [];
     this.sceneMap = {};
     this.current = null;
     this._onchange = this._onchange.bind(this);
   }
 
-  load(content) {
+  load(content, parentElement) {
     this.scenes = content.scenes.map(scene => (this.sceneMap[scene.name] = scene));
     this.current = this.scenes[0];
     this._setScenesPosition();
-    return this._loadScenes();
+    return this._loadScenes(parentElement);
   }
 
   scrollBy(dtop) {
@@ -22,9 +21,9 @@ class SceneProxy {
     return this.current.globalScrollPosition(this.current.scrollTop);
   }
 
-  _loadScenes() {
+  _loadScenes(parentElement) {
     // load all scenes and wait for only first one
-    return this.scenes.map(scene => scene.load(this.parentElement, this._onchange))[0];
+    return this.scenes.map(scene => scene.load(parentElement, this._onchange))[0];
   }
 
   _onchange(name, dtop) {
@@ -55,7 +54,7 @@ class SceneProxy {
 export class Main {
   constructor(props) {
     this.element = props.element;
-    this.scene = new SceneProxy({ parentElement: this.element });
+    this.scene = new SceneProxy();
     this.viewRadius = 300;
     this.fontSize = 1;
     this.dtop = 0;
@@ -63,7 +62,7 @@ export class Main {
   }
 
   load(content) {
-    return this.scene.load(content).then(() => this._moveByScene());
+    return this.scene.load(content, this.element).then(() => this._moveByScene());
   }
 
   resize() {

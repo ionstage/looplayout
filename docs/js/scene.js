@@ -2,7 +2,6 @@ export class Scene {
   constructor(props) {
     this.name = props.name;
     this.element = document.createElement('div');
-    this.parentElement = null;
     this.left = 0;
     this.top = 0;
     this.scrollTop = 0;
@@ -22,9 +21,8 @@ export class Scene {
 
   load(parentElement, onchange) {
     if (!this.loadPromise) {
-      this.parentElement = parentElement;
       this.onchange = onchange;
-      this.loadPromise = this._load();
+      this.loadPromise = this._load(parentElement);
     }
     return this.loadPromise;
   }
@@ -70,9 +68,9 @@ export class Scene {
     /* template */
   }
 
-  _load() {
+  _load(parentElement) {
     this.element.className = 'scene hide';
-    this.parentElement.appendChild(this.element);
+    parentElement.appendChild(this.element);
     return this.loadComponents().then(() => this._onload());
   }
 
